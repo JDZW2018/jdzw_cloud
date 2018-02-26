@@ -1,0 +1,73 @@
+spring:
+  profiles:
+    active: #spring.profiles.active#
+
+
+logging:
+  file: ./log/log.log
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
+
+server:
+  port: 8761
+
+management:
+  security:
+    enabled: false
+
+---
+spring:
+  profiles: dev
+  application:
+    name: server-center
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    service-url:
+      defaultZone:  http://127.0.0.1:${server.port}/eureka/
+  instance:
+    hostname: dev
+
+---
+spring:
+  profiles: dh242
+  application:
+    name: server-center
+eureka:
+  client:
+#    registerWithEureka: false
+#    fetchRegistry: false
+    service-url:
+      defaultZone:  http://192.168.1.243:${server.port}/eureka/,http://192.168.1.244:${server.port}/eureka/
+  instance:
+    hostname: dh242
+
+---
+spring:
+  profiles: dh243
+  application:
+    name: server-center
+eureka:
+  client:
+#    registerWithEureka: false
+#    fetchRegistry: false
+    service-url:
+      defaultZone:  http://192.168.1.242:${server.port}/eureka/,http://192.168.1.244:${server.port}/eureka/
+  instance:
+    hostname: dh243
+
+---
+spring:
+  profiles: dh244
+  application:
+    name: server-center
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://192.168.1.242:${server.port}/eureka/,http://192.168.1.243:${server.port}/eureka/
+  instance:
+      hostname: dh244

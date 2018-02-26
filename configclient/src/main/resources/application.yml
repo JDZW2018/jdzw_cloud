@@ -1,0 +1,12 @@
+server:
+   port: 7005
+   context-path: /client
+    #  use-forward-headers: true
+
+spring:
+  rabbitmq:
+    virtual-host: hystrix
+    host: rabbitmq.dh.com
+    port: 5672
+    username: hystrix
+    password: hystrix

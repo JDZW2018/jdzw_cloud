@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.com.myproject</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.2-SNAPSHOT</version>
+    <modules>
+        <module>configserver</module>
+        <module>servercenter</module>
+        <module>configclient</module>
+        <module>serverprovide</module>
+        <module>serverconsume</module>
+        <module>turbine</module>
+        <module>hystrixdashboard</module>
+        <module>zuul</module>
+
+        <module>authserver</module>
+        <module>zipkinserver</module>
+        <module>mq</module>
+
+        <module>search</module>
+        <module>mqreceive</module>
+
+        <module>gumiho_redis</module>
+        <module>gumiho_admin_common</module>
+        <module>gumiho_admin_user</module>
+        <module>gumiho_aliyun</module>
+        <module>gumiho_admin_web</module>
+        <module>gumiho_pay</module>
+        <module>authclient</module>
+        <module>authclient1</module>
+        <module>authclient2</module>
+        <module>zuuloauth</module>
+        <module>authclient3</module>
+        <module>zuulauthserver</module>
+        <module>task</module>
+        <module>springbatch</module>
+        <module>quartz</module>
+
+        <module>netty</module>
+    </modules>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+    </parent>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>dh-repo</id>
+            <name>Releases</name>
+            <url>http://192.168.1.208:8081/repository/maven-central/</url>
+        </repository>
+        <snapshotRepository>
+            <id>dh-repo</id>
+            <name>Snapshot</name>
+            <url>http://192.168.1.208:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Edgware.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

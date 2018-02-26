@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: auth-client
+  datasource:
+    name: oauth
+    url: jdbc:mysql://192.168.1.204:3306/cloud_auth
+    username: cloud
+    password: cloud
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+  rabbitmq:
+    host: 192.168.1.211
+    port: 5672
+    username: test
+    password: test
+    virtual-host: test
+# Define the port where the API gateway server would be running
+server:
+  port: 3335
+  context-path: /
+  session:
+    cookie:
+      name: oauth2session
+
+# Define the Eureka server that handles service registration
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.1.242:8761/eureka/,http://192.168.1.243:8761/eureka/,http://192.168.1.244:8761/eureka/
+
+
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://oauth2.dh.com:8889/uaa/oauth/token
+      userAuthorizationUri: http://oauth2.dh.com:8889/uaa/oauth/authorize
+      clientId: demo
+      clientSecret: demo
+      scope: read,write
+      grant-type: client_credentials
+      authorized-grant-types: client_credentials
+      resource-ids: authclient
+    resource:
+      id: authclient
+      token-info-uri: http://oauth2.dh.com:8889/uaa/oauth/check_token
+  basic:
+    enabled: false
+
+
+management:
+  security:
+    enabled: false
+
+logging:
+  level.root: DEBUG
+  file: ./logs/log.log
+  level.org.apache.http: INFO
+  level.com.netflix.discovery: INFO
+
+
+
+
+

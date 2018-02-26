@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: rabbitmqreceive
+  rabbitmq:
+    host: rabbitmq.dh.com
+    port: 5672
+    username: test
+    password: test
+    virtual-host: test
+    publisher-returns: true
+    publisher-confirms: true
+    cache:
+      channel:
+        size: 50
+
+
+# Define the port where the UAA server would be running
+server:
+  port: 6666
+  # Use different context-path to avoid session cookie overlapping
+  context-path: /
+#  use-forward-headers: true
+
+
+
+
+logging:
+  level.root: DEBUG
+  file: ./logs/log.log
+  level.org.apache.http: INFO
+  level.com.netflix.discovery: INFO
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.242:8761/eureka/

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.adminuser.mapper.SysRoleMapper">
+    <!--<cache type="org.mybatis.caches.RedisCache" />-->
+    <resultMap type="SysRole" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="SMALLINT"/>
+        <result property="createTime" column="create_time" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <select id="getAllRoleName" resultType="string">
+        select role_name from sys_role where status = 1
+    </select>
+
+    <select id="getAllRoleId" resultType="string">
+        select role_id from sys_role
+    </select>
+
+    <select id="getRoleIds" resultType="string" parameterType="string">
+        select role_id from sys_user_role where status = 1 and user_id = #{value}
+    </select>
+
+    <select id="getAllUseRoleId" resultType="string">
+        select role_id from sys_role where status = 1
+    </select>
+
+
+    <select id="getPage" resultMap="resultMap">
+        select id,role_id,role_name from sys_role where status = 1
+    </select>
+
+    <insert id="addRoles" parameterType="SysRole">
+        insert into sys_role(role_id,role_name,status,version) values (#{roleId},#{roleName},#{status},#{version})
+    </insert>
+
+    <update id="updateRoles" parameterType="SysRole">
+          update sys_role set role_name = #{roleName} where id = #{id}
+    </update>
+
+    <select id="checkRoles" parameterType="String" resultType="Integer">
+          select count(role_name) from sys_role where role_name = #{roleName}
+    </select>
+
+    <delete id="delRoles">
+        delete from sys_role where id = #{id}
+    </delete>
+
+    <select id="selectRoles" parameterType="Integer" resultType="SysRole">
+       select id,role_id,role_name from sys_role where id = #{id}
+    </select>
+
+    <select id="getRole" resultMap="resultMap">
+        select id,role_id,role_name from sys_role where status = 1
+    </select>
+
+</mapper>

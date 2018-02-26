@@ -1,0 +1,82 @@
+spring:
+  aop:
+    proxyTargetClass: true
+  application:
+    name: zuul
+  redis:
+    database: 11
+    host: redis02.dh.com
+    port: 6379
+    password:
+  rabbitmq:
+    host: rabbitmq.dh.com
+    port: 5670
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+
+# Define the port where the API gateway server would be running
+server:
+  port: 3334
+  context-path: /
+#  session:
+#    cookie:
+#      name: zuuloauth
+# Define the Eureka server that handles service registration
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.1.242:8761/eureka/,http://192.168.1.243:8761/eureka/,http://192.168.1.244:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+zuul:
+  routes:
+    gumiho_w_admin_user:
+      path: /wau/**
+      #stripPrefix: false
+      sensitive-headers: xsrf-token,Authorization
+    server-provide:
+      path: /provide/**
+ # add-proxy-headers: true
+  ignored-services: '*'
+  force-original-query-string-encoding: false
+  add-host-header: true
+
+
+
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://oauth2.dh.com/uaa/oauth/token
+      userAuthorizationUri: http://oauth2.dh.com/uaa/oauth/authorize
+      clientId: zuul
+      clientSecret: zuul
+      scope: all
+      id: zull
+      registered-redirect-uri:
+    resource:
+      id: zuul
+      token-info-uri: http://oauth2.dh.com/uaa/oauth/check_token
+      user-info-uri: http://oauth2.dh.com/uaa/oauth/user
+    sso:
+      login-path: /login
+  basic:
+    enabled: true
+  user:
+    password: ly
+    name: ly
+
+
+logging:
+  config: classpath:log4j2.yml
+
+management:
+  security:
+    enabled: true
+
+
+
+
+

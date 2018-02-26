@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.adminuser.mapper.SysRegionMapper" >
+  <cache type="org.mybatis.caches.redis.redis.RedisCache" />
+  <resultMap id="BaseResultMap" type="SysRegion" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="region_id" property="regionId" jdbcType="VARCHAR" />
+    <result column="region_en" property="regionEn" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="p_id" property="pId" jdbcType="VARCHAR" />
+    <result column="international" property="international" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, region_id, region_en, region_name, p_id, international
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_region
+    where region_id = #{regionId}
+  </select>
+
+  <select id="selectByPid" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_region
+    where p_id = #{pId}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="String" >
+    delete from sys_region
+    where region_id = #{regionId}
+  </delete>
+
+  <insert id="insert" parameterType="SysRegion" >
+    insert into sys_region (id, region_id, region_en, 
+      region_name, p_id, international
+      )
+    values (#{id,jdbcType=INTEGER}, #{regionId,jdbcType=VARCHAR}, #{regionEn,jdbcType=VARCHAR}, 
+      #{regionName,jdbcType=VARCHAR}, #{pId,jdbcType=VARCHAR}, #{international,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="SysRegion" >
+    insert into sys_region
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="regionId != null" >
+        region_id,
+      </if>
+      <if test="regionEn != null" >
+        region_en,
+      </if>
+      <if test="regionName != null" >
+        region_name,
+      </if>
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="international != null" >
+        international,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null" >
+        #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionEn != null" >
+        #{regionEn,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null" >
+        #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="international != null" >
+        #{international,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="SysRegion" >
+    update sys_region
+    <set >
+      <if test="regionId != null" >
+        region_id = #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionEn != null" >
+        region_en = #{regionEn,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        region_name = #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="pId != null" >
+        p_id = #{pId,jdbcType=VARCHAR},
+      </if>
+      <if test="international != null" >
+        international = #{international,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where region_id = #{regionId}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SysRegion" >
+    update sys_region
+    set region_id = #{regionId,jdbcType=VARCHAR},
+      region_en = #{regionEn,jdbcType=VARCHAR},
+      region_name = #{regionName,jdbcType=VARCHAR},
+      p_id = #{pId,jdbcType=VARCHAR},
+      international = #{international,jdbcType=VARCHAR}
+    where region_id = #{regionId}
+  </update>
+  <select id="select_countries_code" resultMap="BaseResultMap">
+    select * from sys_region WHERE p_id = 0 AND international IS NOT NULL
+  </select>
+</mapper>

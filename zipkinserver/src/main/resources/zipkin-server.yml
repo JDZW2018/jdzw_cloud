@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    include: myproject
+  application:
+      name: zipkinserver
+  rabbitmq:
+    host: 192.168.1.211
+    port: 5672
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.242:8761/eureka
+
+
+

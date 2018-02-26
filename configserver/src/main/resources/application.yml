@@ -1,0 +1,54 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/liyang2012/wcb_cloud/
+          username: *
+          password: *
+          search-paths: configrepo/config
+          #basedir: configrepo/config
+      uri: http://localhost:7001
+  rabbitmq:
+    host: rabbitmq.dh.com
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+
+server:
+  port: 7001
+  context-path: /
+
+
+logging:
+  level:
+    root: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka242.dh.com:8761/eureka/,http://eureka243.dh.com:8761/eureka/,http://eureka244.dh.com:8761/eureka/
+    register-with-eureka: true
+management:
+  security:
+    enabled: false
+
+
+---
+spring:
+  profiles: local
+
+
+---
+spring:
+  profiles: dev
+  rabbitmq:
+    host: 192.168.1.211
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.242:8761/eureka/,http://192.168.1.243:8761/eureka/,http://192.168.1.244:8761/eureka/

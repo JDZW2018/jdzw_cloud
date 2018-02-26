@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: gumiho_admin_web
+  redis:
+    database: 11
+    host: redis01.dh.com
+    port: 6379
+    password:
+  freemarker:
+    cache: false #为了热加载
+    charset: utf-8
+    allow-request-override: false
+    allow-session-override: false
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    prefer-file-system-access: true
+  rabbitmq:
+    host: rabbitmq.dh.com
+    port: 5672
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+
+# Define the port where the UAA server would be running
+server:
+  port: 8888
+  context-path: /
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.242:8761/eureka/
+
+
+# Define security
+#security:
+#  basic:
+#    enabled: false
+#  user:
+#    password: password
+#  ignored: /css/**,/js/**,/favicon.ico,/webjars/**,/static/assets/**
+#  sessions: if_required
+
+
+logging:
+  level.root: INFO
+  file: ./logs/log.log
+  level.org.apache.http: INFO
+  level.com.netflix.discovery: INFO
+
+
+feignclient:
+  url:
+
+ueditor:
+  url: /Users/liyang-macbook/
+
+feign:
+  compression:
+    request:
+      min-request-size: 2048
+
+
+
+
+
+

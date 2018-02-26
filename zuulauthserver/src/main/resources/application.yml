@@ -1,0 +1,51 @@
+spring:
+  aop:
+    proxyTargetClass: true
+  application:
+    name: zuul_auth_server
+  rabbitmq:
+    host: 192.168.1.211
+    port: 5672
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+
+# Define the port where the API gateway server would be running
+server:
+  port: 80
+  context-path: /
+  session:
+      cookie:
+        name: zuul_auth_server
+
+# Define the Eureka server that handles service registration
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.1.242:8761/eureka/,http://192.168.1.243:8761/eureka/,http://192.168.1.244:8761/eureka/
+
+zuul:
+  routes:
+    auth_server:
+      sensitiveHeaders:
+      path: /uaa/**
+      stripPrefix: false
+  add-proxy-headers: true
+  ignored-services: '*'
+  force-original-query-string-encoding: false
+  add-host-header: true
+
+
+logging:
+  config: classpath:log4j2.yml
+
+management:
+  security:
+    enabled: false
+
+
+
+
+
+
+

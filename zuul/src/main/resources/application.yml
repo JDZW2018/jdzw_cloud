@@ -1,0 +1,53 @@
+spring:
+  aop:
+    proxyTargetClass: true
+  application:
+    name: zuul
+  sleuth:
+    sampler:
+      percentage: 1.0
+  rabbitmq:
+    host: rabbitmq.dh.com
+    port: 5672
+    username: test
+    password: test
+    virtual-host: test
+
+# Define the port where the API gateway server would be running
+server:
+  port: 3333
+  context-path: /
+  session:
+      cookie:
+        name: zuul
+
+# Define the Eureka server that handles service registration
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.1.242:8761/eureka/,http://192.168.1.243:8761/eureka/,http://192.168.1.244:8761/eureka/
+
+zuul:
+  routes:
+    auth-client: /authclient/**
+    auth-client2: /authclient2/**
+    gumiho_admin_web: /admin/**
+  add-proxy-headers: true
+  ignored-services: '*'
+  force-original-query-string-encoding: false
+  add-host-header: true
+
+
+logging:
+  config: classpath:log4j2.yml
+
+management:
+  security:
+    enabled: false
+
+
+
+
+
+
+

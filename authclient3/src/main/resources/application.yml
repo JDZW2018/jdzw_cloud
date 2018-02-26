@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: auth-client3
+  datasource:
+    name: oauth
+    url: jdbc:mysql://mysql01.dh.com:3306/cloud_auth
+    username: cloud
+    password: cloud
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+  rabbitmq:
+    host: rabbitmq.dh.com
+    port: 5672
+    username: test
+    password: test
+    virtual-host: test
+# Define the port where the API gateway server would be running
+server:
+  port: 3337
+  context-path: /
+  session:
+    cookie:
+      name: oauth2session3
+
+# Define the Eureka server that handles service registration
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.1.242:8761/eureka/,http://192.168.1.243:8761/eureka/,http://192.168.1.244:8761/eureka/
+
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://oauth2.dh.com:8889/uaa/oauth/token
+      userAuthorizationUri: http://oauth2.dh.com:8889/uaa/oauth/authorize
+      clientId: client3
+      clientSecret: client3
+      scope: all
+      resource-ids: authclient3
+      id: authclient3
+      authorized-grant-types: authorization_code,refresh_token
+    resource:
+      id: authclient3
+      token-info-uri: http://oauth2.dh.com:8889/uaa/oauth/check_token
+      user-info-uri: http://oauth2.dh.com:8889/uaa/oauth/user
+    sso:
+      login-path: /ssoLogin
+  basic:
+    enabled: true
+  user:
+    password: ly
+    name: ly
+
+
+management:
+  security:
+    enabled: false
+
+logging:
+  level.root: DEBUG
+  file: ./logs/log.log
+  level.org.apache.http: INFO
+  level.com.netflix.discovery: INFO
+
+
+
+
+

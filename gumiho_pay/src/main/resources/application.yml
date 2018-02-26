@@ -1,0 +1,33 @@
+alipay:
+  gateway-url: https://openapi.alipay.com/gateway.do
+  app-id: *
+  app-private-key: *
+  alipay-public-key: *
+  notify-url: http://c.myproject.com.cn/api/paycallback/alipay
+wxJspPay:
+    secret: *
+    business-secret-key: *
+    notify-url: http://c.myproject.com.cn/wap/wx/notify
+
+wxAppPay:
+    secret: *
+    business-secret-key: *
+    notify-url: http://c.myproject.com.cn/api/paycallback/wxAppNotify
+    wap-notify-url:  http://c.myproject.com.c/wap/wx/wapnotify
+server:
+  port: 7111
+  context-path: /pay_server
+
+
+logging:
+  level:
+    root: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka242.dh.com:8761/eureka/,http://eureka243.dh.com:8761/eureka/,http://eureka244.dh.com:8761/eureka/
+    register-with-eureka: true
+management:
+  security:
+    enabled: false

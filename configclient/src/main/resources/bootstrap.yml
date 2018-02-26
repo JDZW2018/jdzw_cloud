@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: configclient
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+  profiles:
+    active: dev
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka242.dh.com:8761/eureka/, http://eureka243.dh.com:8761/eureka/, http://eureka244.dh.com:8761/eureka/
+      register-with-eureka: true
+  instance:
+    prefer-ip-address: true

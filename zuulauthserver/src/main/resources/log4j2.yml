@@ -1,0 +1,68 @@
+Configuration:
+  status: warn
+
+  Properties: # 定义全局变量
+    Property: # 缺省配置（用于开发环境）。其他环境需要在VM参数中指定，如下：
+      - name: log.level.console
+        value: DEBUG
+      - name: log.level.wcb
+        value: DEBUG
+      - name: log.path
+        value: ./logs
+      - name: project.name
+        value: zuul_auth_server
+
+  Appenders:
+    Console:  #输出到控制台
+      name: CONSOLE
+      target: SYSTEM_OUT
+      ThresholdFilter:
+        level: ${sys:log.level.console} # “sys:”表示：如果VM参数中没指定这个变量值，则使用本文件中定义的缺省全局变量值
+        onMatch: ACCEPT
+        onMismatch: DENY
+      PatternLayout:
+        pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] %highlight{%-5level} %style{%logger{36}}{FG_Yellow} - %highlight{%m%n}"
+    RollingFile: # 输出到文件，超过128MB归档
+      - name: ROLLING_FILE
+        ignoreExceptions: false
+        fileName: ${log.path}/${project.name}.log
+        filePattern: "${log.path}/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"
+        PatternLayout:
+          pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] %-5level %logger{36} - %m%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: "128 MB"
+        DefaultRolloverStrategy:
+          max: 1000
+
+  Loggers:
+    Root:
+      level: ${sys:log.level.wcb}
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: ROLLING_FILE
+    Logger:
+      - name: cn.com.myproject
+        additivity: false
+        level: ${sys:log.level.wcb}
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: ROLLING_FILE
+      - name: com.netflix
+        additivity: false
+        level: INFO
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: ROLLING_FILE
+      - name: org.apache.http
+        additivity: false
+        level: INFO
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: ROLLING_FILE
+      - name: org.springframework.integration.endpoint
+        additivity: false
+        level: INFO
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: ROLLING_FILE
