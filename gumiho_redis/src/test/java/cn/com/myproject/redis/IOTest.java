@@ -76,4 +76,31 @@ public class IOTest {
         bufr.close();
     }
 
+    /**
+     * 序列化IO
+     * @throws Exception
+     */
+    @Test
+    public void ObjectIO() throws Exception {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\obj.txt"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\obj.txt"));
+        oos.writeObject(new Person("lisi",22,"男"));
+        oos.close();
+        Object o = ois.readObject();
+        o.toString();
+        ois.close();
+    }
+
+    class Person implements Serializable {
+        private static final long serialVersionUID = 42L;
+        private transient String name;//用transient修饰后name将不会进行序列化
+        public int age;
+        private String sex;
+
+        Person(String name, int age, String sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+        }
+    }
 }
