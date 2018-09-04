@@ -1,4 +1,4 @@
-package javase;
+package javase.T;
 
 import cn.com.myproject.redis.Application;
 import org.junit.Test;
