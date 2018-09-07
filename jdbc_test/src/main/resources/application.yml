@@ -6,7 +6,7 @@ spring:
   application:
     name: jdbc_test
   datasource:
-    name: admin
+    name: jdbc_test
     url: jdbc:mysql://127.0.0.1:3306/jdbc_test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&useSSL=true&allowMultiQueries=true
     username: root
     password: root
