@@ -61,4 +61,52 @@ public class JdbcPreparedStatementTest {
         resultSet.close();
     }
 
+    @Test
+    public void bachTest() throws SQLException {
+        String sql = "INSERT INTO user VALUES (?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        for(int i = 0 ; i<10; i++){
+            pstmt.setString(1,String.valueOf(i));
+            pstmt.setString(2,"大屌小仙女"+i);
+            pstmt.setString(3,"中性");
+            pstmt.setString(4,"18");
+            pstmt.addBatch();
+        }
+        pstmt.executeBatch();
+        pstmt.close();
+        con.close();
+    }
+
+    /**
+     * 事务手动提交测试
+     * @throws SQLException
+     */
+    @Test
+    public void  transferTest() throws SQLException {
+
+            con.setAutoCommit(false);
+            String sql = "UPDATE user SET name =? WHERE id = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+        try {
+            pstmt.setString(1,"大屌小仙女plus");
+            pstmt.setString(2,"1");
+            pstmt.executeUpdate();
+            con.commit();
+            //throw  new SQLException();
+        } catch (SQLException e) {
+            if(con != null){
+                try {
+                    con.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            throw new RuntimeException(e);
+        }finally {
+            pstmt.close();
+            con.close();
+        }
+
+    }
+
 }
