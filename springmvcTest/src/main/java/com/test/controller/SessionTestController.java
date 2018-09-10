@@ -26,5 +26,4 @@ public class SessionTestController {
         String name = (String) session.getAttribute("name");
         return name;
     }
-
 }
