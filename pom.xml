@@ -42,6 +42,11 @@
         <module>quartz</module>
 
         <module>netty</module>
+        <module>gumiho_z_gateway</module>
+        <module>gumiho_w_admin_user</module>
+        <module>gumiho_s_admin_user</module>
+        <module>gumiho_z_back</module>
+        <module>gumiho_s_etc</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
