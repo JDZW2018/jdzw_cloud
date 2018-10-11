@@ -27,7 +27,7 @@ public class BatchDemoDaoImpl implements BatchDemoDao {
         try{
             int i = 0;
             for(SysUser sysuser : list){
-                session.insert("cn.com.myproject.adminuser.mapper.SysUserMapper.addUsers",sysuser);
+                session.insert("cn.com.myproject.cn.com.myproject.adminuser.mapper.SysUserMapper.addUsers",sysuser);
                 i++;
                 if (i % 500 == 0 ) {
                     session.commit();

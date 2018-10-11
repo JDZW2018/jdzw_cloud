@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2018/4/8
  */
 @Controller
-public class BlacklistController {
+public class    BlacklistController {
     private static final Logger logger = LoggerFactory.getLogger(BlacklistController.class);
     private static final String USER_INFO = "user_info";
     @Autowired

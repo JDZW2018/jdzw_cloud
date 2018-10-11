@@ -19,7 +19,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.com.myproject.adminuser.mapper.SysRoleMapper">
+<mapper namespace="cn.com.myproject.cn.com.myproject.adminuser.mapper.SysRoleMapper">
     <!--<cache type="org.mybatis.caches.RedisCache" />-->
     <resultMap type="SysRole" id="resultMap">
         <id property="id" column="ID" jdbcType="INTEGER"/>
