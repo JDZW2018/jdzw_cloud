@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.etc.message.mapper.MessageRecordMapper" >
+    <resultMap type="cn.com.myproject.etc.message.entity.PO.MessageRecord" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER"/>
+        <result column="message_id" property="messageId" jdbcType="VARCHAR"/>
+        <result column="send_user_id" property="sendUserId" jdbcType="VARCHAR"/>
+        <result column="receive_user_id" property="receiveUserId" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="classify" property="classify" jdbcType="INTEGER"/>
+        <result column="relation_id" property="relationId" jdbcType="VARCHAR"/>
+        <result column="relation_type" property="relationType" jdbcType="INTEGER"/>
+        <result column="message_status" property="messageStatus" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="insertSelective" parameterType="cn.com.myproject.etc.message.entity.PO.MessageRecord">
+        insert into massage_record
+        (message_id,send_user_id,receive_user_id,receive_user_id,title,intro,content,classify,relation_id,relation_type,message_status,create_time,status,version)
+        values
+        (#{messageId},#{sendUserId},#{receiveUserId},#{title},#{intro},#{content},#{classify},#{relationId},#{classify},#{relationType},#{messageStatus},#{status},#{version})
+    </insert>
+    </mapper>

@@ -1,0 +1,36 @@
+
+
+---
+spring:
+  profiles: local
+  rabbitmq:
+    host: 192.168.31.59
+    tran:
+      host: 192.168.31.59
+    receive:
+      host: 192.168.31.59
+    send:
+      host: 192.168.31.59
+
+
+
+
+logging:
+  config: classpath:log4j2-local.yml
+
+
+aliyun:
+  sms:
+    domain: dysmsapi.aliyuncs.com
+    regionId: cn-hangzhou
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+  push:
+    iosHelperAppKey: 24866711
+    iosUserAppKey: 24866906
+    androidUserAppKey: 24866717
+    androidHelperAppKey: 24866917
+    app-secret: gOjwF6hy4pbAyVoNOn1UVpDCEuGiVe
+    i-o-s-apns-env: DEV
+    app-key-id: LTAIKv6Lx2spn45q
+    region-id: cn-beijing

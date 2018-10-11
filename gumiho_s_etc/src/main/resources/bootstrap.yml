@@ -1,0 +1,162 @@
+spring:
+  application:
+    name: gumiho-s-etc
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: gumiho-config-server
+  profiles:
+    active: @spring.profiles.active@
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      percentage: 0.1
+  rabbitmq:
+    port: 5670
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+    cache:
+      channel:
+        size: 50
+#    send:
+#      port: 5670
+#      username: business
+#      password: business
+#      virtual-host: business
+#      publisher-returns: true
+#      publisher-confirms: true
+#      cache:
+#        channel:
+#          size: 50
+#    receive:
+#      port: 5670
+#      username: business
+#      password: business
+#      virtual-host: business
+#      publisher-returns: true
+#      publisher-confirms: true
+#      cache:
+#        channel:
+#          size: 50
+#    tran:
+#      port: 5670
+#      username: business
+#      password: business
+#      virtual-host: business
+#      publisher-returns: false
+#      publisher-confirms: false
+#      cache:
+#        channel:
+#          size: 50
+server:
+  port: 8111
+  context-path: /
+
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  config-location: classpath:mybatis-config.xml
+
+pagehelper:
+  params: pageNum=pageNumKey;pageSize=pageSizeKey;
+
+
+aliyun:
+  sms:
+    accessKeyId: LTAIXFg59417CCbQ
+    accessKeySecret: mduZepBAWvmAkL0B7eZOV4wIqZwy43
+    connectTimeout: 10000
+    readTimeout: 10000
+    product: Dysmsapi
+    signName: 奈斯牛
+  oss:
+    access-key-secret: EcCznLj2uHmi7UtJK6ewLuhBr1p86G
+    access-key-id: LTAIisVWuJqgV4K7
+    bucket-name: oxnice
+    returnUrlPrefix: https://img.oxnice.com/
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      feignName:
+        connectTimeout: 20000
+        readTimeout: 20000
+
+info:
+  s_etc:
+    version: "@project.version@"
+    profile: "@spring.profiles.active@"
+    date: 20180905
+
+---
+spring:
+  profiles: local
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.31.64:8761/eureka/,http://192.168.31.65:8761/eureka/,http://192.168.31.66:8761/eureka/
+    register-with-eureka: false
+  instance:
+      prefer-ip-address: true
+      instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+
+---
+spring:
+  profiles: dev
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.31.64:8761/eureka/,http://192.168.31.65:8761/eureka/,http://192.168.31.66:8761/eureka/
+    register-with-eureka: true
+  instance:
+      prefer-ip-address: true
+      instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+---
+spring:
+  profiles: test
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.77:8761/eureka/,http://192.168.1.78:8761/eureka/,http://192.168.1.79:8761/eureka/
+    register-with-eureka: true
+  instance:
+      prefer-ip-address: true
+      instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+---
+spring:
+  profiles: online0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.17.248.165:8761/eureka/,http://172.17.248.166:8761/eureka/,http://172.17.248.167:8761/eureka/
+    register-with-eureka: true
+  instance:
+      prefer-ip-address: true
+      instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+---
+spring:
+  profiles: online1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.17.248.165:8761/eureka/,http://172.17.248.166:8761/eureka/,http://172.17.248.167:8761/eureka/
+    register-with-eureka: true
+  instance:
+      prefer-ip-address: true
+      instance-id: ${spring.cloud.client.ipAddress}:${server.port}
