@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.adminuser.mapper.SysDepartmentMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.myproject.adminuser.po.SysDepartment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="creat_time" property="creatTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, department_id, department_name, status, version, creat_time
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_department
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="String">
+    SELECT
+     d.id, d.department_id, d.department_name, d.status, d.version, d.creat_time
+    from sys_department d
+    RIGHT JOIN sys_user_department ud ON ud.department_id = d.department_id
+    WHERE ud.user_id = #{userId} AND d.status = '1'
+  </select>
+    <select id ="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from sys_department WHERE status = 1
+    </select>
+
+  <select id="selectByDepartmentId"  resultMap="BaseResultMap" parameterType="string">
+      SELECT
+      <include refid="Base_Column_List" />
+      FROM sys_department
+      WHERE department_id =#{departmentId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from sys_department
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="cn.com.myproject.adminuser.po.SysDepartment" >
+    insert into sys_department (id, department_id, department_name, 
+      status, version, creat_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{departmentId,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{version,jdbcType=INTEGER}, #{creatTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.myproject.adminuser.po.SysDepartment" >
+    insert into sys_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="cn.com.myproject.adminuser.po.SysDepartment" >
+    update sys_department
+    <set >
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateById" parameterType="cn.com.myproject.adminuser.po.SysDepartment" >
+    update sys_department
+    set department_id = #{departmentId,jdbcType=VARCHAR},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER},
+      creat_time = #{creatTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="cn.com.myproject.adminuser.mapper.SysRoleResourceMapper">
+
+    <!--<cache type="org.mybatis.caches.RedisCache" />-->
+    <resultMap type="SysRoleResource" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result property="roleId" column="role_id" jdbcType="VARCHAR" />
+        <result property="resourceId" column="resource_id" jdbcType="VARCHAR" />
+        <result property="status" column="status" jdbcType="SMALLINT" />
+        <result property="createTime" column="create_time" jdbcType="BIGINT" />
+        <result property="version" column="version" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="getSysRoleResource" resultMap="resultMap" parameterType="SysRoleResource">
+        select id,role_id,resource_id,status,create_time,version from sys_role_resource
+        where 1=1
+        <if test="id != null">and  id = #{id}</if>
+        <if test="roleId != null">and role_id = #{roleId}</if>
+        <if test="resourceId != null">and resource_id = #{resourceId}</if>
+        <if test="status != null">and status = #{status}</if>
+        <if test="createTime != null">and create_time = #{createTime}</if>
+        <if test="version != null">and version = #{version}</if>
+    </select>
+
+    <select id="getListByResourceIds" resultMap="resultMap" parameterType="String">
+        select id,role_id,resource_id,status,create_time,version from sys_role_resource
+        where 1=1
+        <if test="resourceIds != null">and <![CDATA[ resource_id in ]]> #{resourceIds} </if>
+    </select>
+
+    <insert id="batchInsert" parameterType="List">
+        insert sys_role_resource (role_id,resource_id,status,create_time,version) VALUES
+            <foreach collection="list" item="item" index="index" separator="," >
+                (#{item.roleId},#{item.resourceId},#{item.status},#{item.createTime},#{item.version})
+            </foreach>
+    </insert>
+
+    <delete id="batchDelete" parameterType="List">
+        <![CDATA[
+            delete from sys_role_resource where resource_id in
+        ]]>
+        <foreach collection="list" item = "item" open="(" separator="," close=")">
+                #{item.resourceId}
+        </foreach>
+
+    </delete>
+    <delete id="deleteByRoleId">
+      delete from sys_role_resource where role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteByResourceId" parameterType="String">
+        DELETE FROM sys_role_resource WHERE  resource_id = #{resourceId jdbcType=VARCHAR}
+    </delete>
+
+
+</mapper>

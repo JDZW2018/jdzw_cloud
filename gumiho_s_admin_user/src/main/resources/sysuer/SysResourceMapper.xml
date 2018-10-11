@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2015-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.myproject.adminuser.mapper.SysResourceMapper">
+ <!--   <cache type="org.mybatis.caches.redis.redis.RedisCache"  />-->
+    <resultMap type="SysResource" id="resultMap">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result property="resourceId" column="resource_id" jdbcType="VARCHAR" />
+        <result property="resourceName" column="resource_name" jdbcType="VARCHAR" />
+        <result property="status" column="status" jdbcType="SMALLINT" />
+        <result property="type" column="type" jdbcType="SMALLINT" />
+        <result property="createTime" column="create_time" jdbcType="BIGINT" />
+        <result property="value" column="value" jdbcType="VARCHAR" />
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR" />
+        <result property="icon" column="icon" jdbcType="VARCHAR" />
+        <result property="menu" column="menu" jdbcType="SMALLINT" />
+        <result property="seqno" column="seqno" jdbcType="INTEGER" />
+        <result property="version" column="version" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <select id="checkValue" resultType="Integer" parameterType="string">
+        SELECT COUNT(r.value) FROM sys_resource r WHERE r.value =#{value jdbcType=VARCHAR}
+    </select>
+
+    <select id="getValueByRoleId"  resultMap="resultMap" parameterType="string">
+      SELECT t1.value,t1.type FROM sys_resource t1,sys_role_resource t2 where t1.resource_id = t2.resource_id and t2.role_id= #{value}
+      and t1.status=1 and t2.status=1
+    </select>
+
+    <select id="getAllValue"  resultType="string">
+        SELECT value FROM sys_resource
+    </select>
+
+    <select id="getAllUseValue"  resultType="string" parameterType="string">
+        SELECT t1.value FROM sys_resource t1 where status = 1 and type = #{value}
+    </select>
+    <select id="getMenu" parameterType="string" resultMap="resultMap">
+        select DISTINCT t1.resource_id,t1.resource_name,t1.value,t1.parent_id,t1.icon from sys_resource t1
+        left join sys_role_resource t2 on t1.resource_id = t2.resource_id
+        left join sys_role t3 on t2.role_id = t3.role_id
+        left join sys_user_role t4 on t3.role_id = t4.role_id
+        where t4.user_id = #{value}
+        and t1.type = 1 and t1.menu = 1 and t1.status = 1 and t1.parent_id = '0'
+    </select>
+
+
+    <select id="getMenuByResourceId" resultMap="resultMap">
+    select DISTINCT t1.resource_id,t1.resource_name,t1.value,t1.parent_id,t1.icon,t1.seqno from sys_resource t1
+    left join sys_role_resource t2 on t1.resource_id = t2.resource_id
+    left join sys_role t3 on t2.role_id = t3.role_id
+    left join sys_user_role t4 on t3.role_id = t4.role_id
+    where  t1.type = 1 and t1.menu = 1 and t1.status = 1 and t1.parent_id = #{arg1} and t4.user_id = #{arg0}
+    </select>
+
+    <select id="getSysResource" resultMap="resultMap" parameterType="cn.com.myproject.adminuser.po.SysResource">
+        select id,resource_id,resource_name,value,type,parent_id,status,create_time,version,seqno,menu,icon from sys_resource
+        <where>
+            <if test="id != null">and  id = #{id}</if>
+            <if test="resourceId != null">and resource_id = #{resourceId}</if>
+            <if test="resourceName != null">and resource_name = #{resourceName}</if>
+            <if test="value != null">and value = #{value}</if>
+            <if test="type != null">and type = #{type}</if>
+            <if test="parentId != null">and parent_id = #{parentId}</if>
+            <if test="status != null">and status = #{status}</if>
+            <if test="createTime != null">and create_time = #{createTime}</if>
+            <if test="version != null">and version = #{version}</if>
+            <if test="menu != null">and menu = #{menu}</if>
+            <if test="icon != null">and icon = #{icon}</if>
+        </where>
+        ORDER BY seqno
+    </select>
+
+    <select id="getSysResourceByResourceId" resultMap="resultMap" parameterType="String">
+        select id,resource_id,resource_name,value,type,parent_id,status,create_time,version,seqno,menu,icon from sys_resource  where resource_id = #{resourceId}
+    </select>
+
+    <insert id="addSysResource" parameterType="SysResource">
+        INSERT sys_resource (resource_id,resource_name,value,type,parent_id,status,create_time,version,seqno,menu,icon) VALUES
+        (#{resourceId},#{resourceName},#{value},#{type},#{parentId},#{status},#{createTime},#{version},#{seqno},#{menu},#{icon})
+    </insert>
+
+    <update id="updateSysResource" parameterType="SysResource">
+        UPDATE  sys_resource
+        <trim prefix="set" suffixOverrides=",">
+            <if test="resourceId != null">resource_id = #{resourceId},</if>
+            <if test="resourceName != null">resource_name = #{resourceName},</if>
+            <if test="value != null">value = #{value},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="seqno != null">seqno = #{seqno},</if>
+            <if test="menu != null">menu = #{menu},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="version != null">version = version + 1 ,</if>
+        </trim>
+        where resource_id = #{resourceId}
+        <if test="version != null">AND version = #{version}</if>
+    </update>
+
+    <delete id="deleteSysResource" parameterType="String">
+        delete FROM sys_resource where resource_id = #{resourceId}
+    </delete>
+
+</mapper>
