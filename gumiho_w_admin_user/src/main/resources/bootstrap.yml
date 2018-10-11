@@ -1,0 +1,73 @@
+spring:
+  profiles:
+    active: @spring.profiles.active@
+  application:
+    name: gumiho-w-admin-user
+  freemarker:
+    cache: false #为了热加载
+    charset: utf-8
+    allow-request-override: false
+    allow-session-override: false
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    prefer-file-system-access: true
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      percentage: 0.1
+
+info:
+  w-admin-user:
+    version: "@project.version@"
+    profile: "@spring.profiles.active@"
+    date: 20180627
+
+
+feign:
+  compression:
+    request:
+      min-request-size: 2048
+  hystrix:
+    enabled: true   #启用hystrix监控
+  client:
+    config:
+      feignName:
+        connectTimeout: 60000
+        readTimeout: 60000
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+ueditor:
+  url: /Users/liyang-macbook/
+
+# Define security
+#security:
+#  basic:
+#    enabled: false
+#  user:
+#    password: password
+#  ignored: /css/**,/js/**,/favicon.ico,/webjars/**,/static/assets/**
+#  sessions: if_required
+
+
+
+
+
+

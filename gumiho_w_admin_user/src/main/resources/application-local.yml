@@ -1,0 +1,40 @@
+---
+server:
+  port: 8888
+  context-path: /
+#  session:
+#    cookie:
+#      name: zuuloauth
+
+
+spring:
+  profiles: local
+
+  redis:
+    database: 11
+    host: redis02.dh.com
+    port: 6379
+    password:
+
+  rabbitmq:
+    host: 192.168.1.210
+    port: 5670
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+
+logging:
+  config: classpath:log4j2-local.yml
+
+feignclient:
+  url:
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/ #http://192.168.1.242:8761/eureka/,http://192.168.1.243:8761/eureka/,http://192.168.1.244:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+ctx:
+  value: /oxr
