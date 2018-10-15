@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  *
  * 启动类
- * @author ly
+ * @author tianfusheng
  */
 @SpringCloudApplication
 @ComponentScan("cn.com.myproject")
