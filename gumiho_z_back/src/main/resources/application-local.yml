@@ -1,0 +1,100 @@
+---
+server:
+  port: 3339
+  context-path: /
+
+spring:
+  profiles: local
+  redis:
+    database: 10
+    host: 192.168.31.54
+    port: 6379
+    password:
+  rabbitmq:
+    host: 192.168.31.59
+    port: 5670
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+
+logging:
+  config: classpath:log4j2-local.yml
+
+zuul:
+  routes:
+    gumiho-w-admin-user:
+      path: /oxr/**
+      stripPrefix: true
+      sensitive-headers: xsrf-token,Authorization
+    gumiho-w-background:
+      path: /nice/**
+      stripPrefix: true
+      sensitive-headers: xsrf-token,Authorization
+    gumiho-w-b2b:
+      path: /oxbl/**
+      stripPrefix: true
+      sensitive-headers: xsrf-token,Authorization
+    gumiho-w-b2bnational:
+      path: /oxbc/**
+      stripPrefix: true
+      sensitive-headers: xsrf-token,Authorization
+    gumiho-w-b2c:
+      path: /oxc/**
+      stripPrefix: true
+      sensitive-headers: xsrf-token,Authorization
+    gumiho-w-service:
+      path: /oxf/**
+      stripPrefix: true
+      sensitive-headers: xsrf-token,Authorization
+    gumiho-w-operating:
+      path: /oxy/**
+      stripPrefix: true
+      sensitive-headers: xsrf-token,Authorization
+    gumiho-w-teminal:
+      path: /oxm/**
+      stripPrefix: true
+      sensitive-headers: xsrf-token,Authorization
+
+ # add-proxy-headers: true
+  ignored-services: '*'
+  force-original-query-string-encoding: false
+  add-host-header: true
+  host:
+    connect-timeout-millis: 60000
+    socket-timeout-millis: 6000
+
+
+eureka:
+  client:
+    serviceUrl:
+    defaultZone: http://192.168.31.64:8761/eureka/,http://192.168.31.65:8761/eureka/,http://192.168.31.66:8761/eureka/
+  register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://oauth2.oxnice.com/uaa/oauth/token
+      userAuthorizationUri: http://oauth2.oxnice.com/uaa/oauth/authorize
+      clientId: zuul
+      clientSecret: zuul
+      scope: all
+      id: zull
+      registered-redirect-uri:
+    resource:
+      id: zuul
+      token-info-uri: http://oauth2.oxnice.com/uaa/oauth/check_token
+      user-info-uri: http:/oauth2.oxnice.com/uaa/oauth/user
+    sso:
+      login-path: /login
+      logout: http://oauth2.oxnice.com/uaa/logout?token=
+  basic:
+    enabled: true
+  user:
+    password: ly
+    name: ly
+
+gumiho-s-merchant:
+  url: 127.0.0.1:8002

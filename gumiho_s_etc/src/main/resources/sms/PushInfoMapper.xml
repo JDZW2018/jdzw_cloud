@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.myproject.etc.push.mapper.PushInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.myproject.etc.push.entity.PushInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="out_id" property="outId" jdbcType="BIGINT" />
+    <result column="message_status" property="messageStatus" jdbcType="BIT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="target_value" property="targetValue" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="push_type" property="pushType" jdbcType="VARCHAR" />
+    <result column="ext_parameters" property="extParameters" jdbcType="VARCHAR" />
+    <result column="apps" property="apps" jdbcType="VARCHAR"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.com.myproject.etc.push.entity.PushInfo" extends="BaseResultMap" >
+    <result column="body" property="body" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, out_id, message_status, version, create_time, title, target, target_value, device_type, 
+    push_type, ext_parameters ,apps
+  </sql>
+  <sql id="Blob_Column_List" >
+    body
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from push_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from push_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.myproject.etc.push.entity.PushInfo" >
+    insert into push_info (id, out_id, message_status, 
+      version, create_time, title, 
+      target, target_value, device_type, 
+      push_type, ext_parameters, body,apps
+      )
+    values (#{id,jdbcType=INTEGER}, #{outId,jdbcType=BIGINT}, #{messageStatus,jdbcType=BIT}, 
+      #{version,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{target,jdbcType=VARCHAR}, #{targetValue,jdbcType=VARCHAR}, #{deviceType,jdbcType=VARCHAR}, 
+      #{pushType,jdbcType=VARCHAR}, #{extParameters,jdbcType=VARCHAR}, #{body,jdbcType=LONGVARCHAR},#{apps,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.myproject.etc.push.entity.PushInfo" >
+    insert into push_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="outId != null" >
+        out_id,
+      </if>
+      <if test="messageStatus != null" >
+        message_status,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="targetValue != null" >
+        target_value,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="pushType != null" >
+        push_type,
+      </if>
+      <if test="extParameters != null" >
+        ext_parameters,
+      </if>
+      <if test="body != null" >
+        body,
+      </if>
+      <if test="apps != null">
+        apps,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="outId != null" >
+        #{outId,jdbcType=BIGINT},
+      </if>
+      <if test="messageStatus != null" >
+        #{messageStatus,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="targetValue != null" >
+        #{targetValue,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="pushType != null" >
+        #{pushType,jdbcType=VARCHAR},
+      </if>
+      <if test="extParameters != null" >
+        #{extParameters,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="apps != null">
+        #{apps,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByOutIdSelective" parameterType="cn.com.myproject.etc.push.entity.PushInfo" >
+    update push_info
+    <set >
+      <if test="messageStatus != null" >
+        message_status = #{messageStatus,jdbcType=BIT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="targetValue != null" >
+        target_value = #{targetValue,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="pushType != null" >
+        push_type = #{pushType,jdbcType=VARCHAR},
+      </if>
+      <if test="extParameters != null" >
+        ext_parameters = #{extParameters,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        body = #{body,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="apps != null" >
+        apps = #{apps,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where out_id = #{outId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.com.myproject.etc.push.entity.PushInfo" >
+    update push_info
+    set out_id = #{outId,jdbcType=BIGINT},
+      message_status = #{messageStatus,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      target_value = #{targetValue,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      push_type = #{pushType,jdbcType=VARCHAR},
+      ext_parameters = #{extParameters,jdbcType=VARCHAR},
+      body = #{body,jdbcType=LONGVARCHAR},
+      apps = #{apps,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.myproject.etc.push.entity.PushInfo" >
+    update push_info
+    set out_id = #{outId,jdbcType=BIGINT},
+      message_status = #{messageStatus,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      target_value = #{targetValue,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      push_type = #{pushType,jdbcType=VARCHAR},
+      ext_parameters = #{extParameters,jdbcType=VARCHAR},
+      apps = #{apps,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="countByOutId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+    select
+    count(1)
+    from
+    push_info
+    where out_id = #{outId}
+  </select>
+  
+  <update id="updateMessageStatus" parameterType="java.lang.String">
+    UPDATE  push_info SET message_status = 0 WHERE target_value = #{targetValue} and out_id = #{outId}
+  </update>
+
+  <select id="selectMessage" resultMap="BaseResultMap">
+   SELECT * from  push_info WHERE target_value = #{targetValue} and push_type = 'MESSAGE' and apps='USER'
+  </select>
+</mapper>

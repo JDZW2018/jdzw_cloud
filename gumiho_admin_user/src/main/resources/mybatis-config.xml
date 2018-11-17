@@ -68,7 +68,7 @@
 
 
     <typeAliases>
-        <package name="cn.com.myproject.adminuser.po"/>
+        <package name="cn.com.myproject.cn.com.myproject.adminuser.po"/>
     </typeAliases>
 
     <!--<plugins>-->

@@ -1,0 +1,53 @@
+---
+server:
+  port: 3334
+  context-path: /
+spring:
+  profiles: local
+  datasource:
+    name: admin
+    url: jdbc:mysql://192.168.1.248:3306/gumiho_admin_user?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&useSSL=true&allowMultiQueries=true
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 11
+    host: redis02.dh.com
+    port: 6379
+    password:
+  rabbitmq:
+    host: rabbitmq.dh.com
+    port: 5670
+    username: hystrix
+    password: hystrix
+    virtual-host: hystrix
+
+gumiho-s-merchant:
+  url: 127.0.0.1:8002
+gumiho-s-allinpay:
+  url: 127.0.0.1:9876
+
+logging:
+  config: classpath:log4j2-local.yml
+aliyun:
+  oss:
+    endpoint: oss-cn-hongkong.aliyuncs.com
+    access-key-secret: XWwSMQFfcFEisPBJXoYOoGuDHwL66N
+    access-key-id: LTAIPOcxLTWiB6yH
+    bucket-name: sjjimg
+    return-url-prefix: http://a.myproject.com.cn/
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  #type-aliases-package: classpath:cn.com.myproject.user.entity
+  config-location: classpath:mybatis-config.xml
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/ #http://eureka242.dh.com:8761/eureka/,http://eureka243.dh.com:8761/eureka/,http://eureka244.dh.com:8761/eureka/
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}

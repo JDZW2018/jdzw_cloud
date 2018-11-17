@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: gumiho-s-admin-user
+  profiles:
+    active: @spring.profiles.active@
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      percentage: 0.2
+
+ # cloud:
+ #   config:
+ #     discovery:
+ #       enabled: true
+ #       service-id: gumiho-config-server
+
+info:
+  s-admin-user:
+    version: "@project.version@"
+    profile: "@spring.profiles.active@"
+    date: 20180823
+
+
+pagehelper:
+  params: pageNum=pageNumKey;pageSize=pageSizeKey;
+
