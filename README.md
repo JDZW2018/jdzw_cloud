@@ -2,5 +2,5 @@
 
 对应[spring cloud Edgware.RELEASE](https://projects.spring.io/spring-cloud/)
 
-由于Finchley M4太不稳定，先切换到Edgware.RELEASE版本，呵呵......
+学习使用spring cloud，摘抄过来的。
 
